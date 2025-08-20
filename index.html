@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Backpropagation-Free Test-Time Adaptation via Probabilistic Gaussian Alignment.">
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backpropagation-Free Test-Time Adaptation via Probabilistic Gaussian Alignment</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+    <style>
+      .carousel { overflow: hidden; }
+      .carousel-item { min-width: 100% !important; }
+    </style>  
+  <link rel="icon" type="image/x-icon" href="./static/images/logo.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"> Backpropagation-Free Test-Time Adaptation via Probabilistic Gaussian Alignment</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href='https://youjia-zhang.github.io/' target='_blank'>Youjia Zhang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href='https://youngryan1993.github.io/homepage/' target='_blank'>Youngeun Kim</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href='https://sites.google.com/view/ygchoi' target='_blank'>Young-Geun Choi</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href='https://scholar.google.com/citations?view_op=list_works&hl=en&user=WQfYo0MAAAAJ' target='_blank'>Huiling Liu </a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href='https://www.csehong.com/' target='_blank'>Sungeun Hong</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Sungkyunkwan University</span>
+            <span class="author-block"><sup>2</sup>Yale University,</span>
+            <span class="conference-block"><br>arViv 2025</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/XXXXXXx"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Github link -->
+              <span class="link-block">
+              <a href="https://github.com/AIM-SKKU/ADAPT" target="_blank"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>Code</span>
+              </a>
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Concept Figure Section -->
+<div class="has-text-centered">
+  <img src="./static/images/Overview.png" style="max-width:70%; height:auto;">
+  <div style="font-weight:bold; text-align:center; margin-top:8px;">
+    Overview of Online ADAPT
+  </div>
+</div>
+
+  
+
+<section class="section py-3">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          Test-time adaptation (TTA) enhances the zero-shot robustness under distribution shifts by leveraging unlabeled test data during inference. Despite notable advances, several challenges still limit its broader applicability.
+          First, most methods rely on backpropagation or iterative optimization, which limits scalability and hinders real-time deployment. Second, they lack explicit modeling of class-conditional feature distributions. This modeling is crucial for producing reliable decision boundaries and calibrated predictions, but it remains underexplored due to the lack of both source data and supervision at test time.
+          In this paper, we propose an **A**dvanced **D**istribution-**A**ware and back**P**ropagation-free **T**est-time adaptation (**ADAPT**) method. We reframe TTA as a Gaussian probabilistic inference task by modeling class-conditional likelihoods using gradually updated class means and a shared covariance matrix. This enables closed-form, training-free inference. To correct potential likelihood bias, we introduce lightweight regularization guided by CLIP priors and a historical knowledge bank. ADAPT requires no source data, no gradient updates, and no full access to target data, supporting both online and transductive settings.
+          Extensive experiments across diverse benchmarks demonstrate that our method achieves state-of-the-art performance under a wide range of distribution shifts with superior scalability and robustness. 
+
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    If you find our work useful, please consider citing:
+    <pre><code>@article{kim2025task,
+  title={Backpropagation-Free Test-Time Adaptation via Probabilistic Gaussian Alignment},
+  author={Youjia, Zhang and Youngeun, Kim and Young-Geun, Choi and Hongyeob, Kim and Huiling, Liu and Sungeun, Hong},
+  journal={arXiv},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+
+</body>
+</html>
