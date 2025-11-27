@@ -29,6 +29,11 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+  <!-- MathJax for equations -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
 </head>
 <body>
 
@@ -57,7 +62,7 @@
               <a href='https://scholar.google.com/citations?view_op=list_works&hl=en&user=WQfYo0MAAAAJ' target='_blank'>Huiling Liu </a><sup>1</sup>,
             </span>
             <span class="author-block">
-              <a href='https://www.csehong.com/' target='_blank'>Sungeun Hong</a><sup>1</sup>,
+              <a href='https://www.csehong.com/' target='_blank'>Sungeun Hong</a><sup>1</sup><img src="./static/images/message.png" style="width:30px; height:30px; vertical-align:super; margin-left:2px;">,
             </span>
           </div>
 
@@ -131,7 +136,7 @@
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3"><img src="./static/images/fireworks.gif" style="height:60px; vertical-align:middle; margin-right:8px;">Abstract</h2>
         <div class="content has-text-justified">
           <p>
 Test-time adaptation (TTA) enhances the zero-shot robustness under distribution shifts by leveraging unlabeled test data during inference. Despite notable advances, several challenges still limit its broader applicability. First, most methods rely on backpropagation or iterative optimization, which limits scalability and hinders real-time deployment. Second, they lack explicit modeling of class-conditional feature distributions. This modeling is crucial for producing reliable decision boundaries and calibrated predictions, but it remains underexplored due to the lack of both source data and supervision at test time.
@@ -145,9 +150,193 @@ In this paper, we propose <b>ADAPT</b>, an <b>A</b>dvanced <b>D</b>istribution-<
 </section>
 
 
+<!-- Introduction Section -->
+<section class="section py-3">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><img src="./static/images/search.gif" style="height:55px; vertical-align:middle; margin-right:8px;">Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>Test-Time Adaptation (TTA)</b> enhances zero-shot robustness under distribution shifts by adapting to unlabeled test data during inference. However, existing methods face two key limitations:
+          </p>
+          <p style="margin-left:20px;">
+            <i class="fas fa-times-circle" style="color:#e74c3c; margin-right:8px;"></i><b>High computational cost:</b> Most methods rely on backpropagation or iterative optimization, limiting scalability and real-time deployment.
+          </p>
+          <p style="margin-left:20px;">
+            <i class="fas fa-times-circle" style="color:#e74c3c; margin-right:8px;"></i><b>Lack explicit class distribution modeling:</b> They fail to model class-conditional feature distributions, leading to unstable decision boundaries.
+          </p>
+        </div>
+        <!-- Two figures side by side -->
+        <div class="columns is-centered" style="margin-top: 1.5rem;">
+          <div class="column is-half has-text-centered" style="display:flex; flex-direction:column; align-items:center;">
+            <img src="./static/images/Backpropagation-required Online TTA.png" style="height:200px; width:auto;">
+            <p style="font-size:0.9rem; margin-top:8px;">(a) Backpropagation-required Online TTA</p>
+          </div>
+          <div class="column is-half has-text-centered" style="display:flex; flex-direction:column; align-items:center;">
+            <img src="./static/images/GDA-based Transductive TTA.png" style="height:200px; width:auto;">
+            <p style="font-size:0.9rem; margin-top:8px;">(b) GDA-based Transductive TTA</p>
+          </div>
+        </div>
+        <div class="content has-text-justified" style="margin-top: 1.5rem;">
+          <p>
+            We propose <b>ADAPT</b>, a backpropagation-free and distribution-aware TTA framework that seamlessly supports both <b>online</b> and <b>transductive</b> adaptation settings.
+          </p>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="has-text-centered" style="margin-top: 1.5rem;">
+          <img src="./static/images/Table_Comparison with existing TTA.png" style="max-width:100%; height:auto;">
+          <p style="font-size:0.9rem; margin-top:8px;">Comparison with existing TTA methods. ADAPT is the method that achieves BP-Free, Distribution-Aware, and supports both Online and Transductive settings.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Method Section -->
+<section class="section py-3">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><img src="./static/images/book.gif" style="height:55px; vertical-align:middle; margin-right:8px;">Method</h2>
+        
+        <div class="content has-text-justified">
+          <p>
+            We propose <b>ADAPT</b>, an <b>A</b>dvanced <b>D</b>istribution-<b>A</b>ware and back<b>P</b>ropagation-free <b>T</b>est-time adaptation method. Our key idea is to reframe TTA as a <b>Gaussian probabilistic inference</b> task by modeling class-conditional likelihoods.
+          </p>
+        </div>
+
+        <!-- Key Components -->
+        <div class="content has-text-justified">
+          <p style="margin-left:20px;">
+            <i class="fas fa-check-circle" style="color:#27ae60; margin-right:8px;"></i><b>Gaussian Modeling:</b> Estimate class-conditional feature distributions.
+          </p>
+          <p style="margin-left:20px;">
+            <i class="fas fa-check-circle" style="color:#27ae60; margin-right:8px;"></i><b>BP-free Adaptation:</b> Training-free; works in both online & transductive modes.
+          </p>
+          <p style="margin-left:20px;">
+            <i class="fas fa-check-circle" style="color:#27ae60; margin-right:8px;"></i><b>Closed-form Update:</b> One-pass; efficient; no iteration or fine-tuning required.
+          </p>
+        </div>
+
+        <!-- Algorithm figures side by side -->
+        <div class="columns is-centered" style="margin-top: 1.5rem;">
+          <div class="column is-half has-text-centered" style="display:flex; flex-direction:column; align-items:center;">
+            <img src="./static/images/Algorithm_1 Online.png" style="max-width:95%; height:auto; border:1px solid #ddd; padding:5px;">
+            <p style="font-size:0.9rem; margin-top:8px;">Algorithm 1: Online TTA</p>
+          </div>
+          <div class="column is-half has-text-centered" style="display:flex; flex-direction:column; align-items:center;">
+            <img src="./static/images/Algorithm_2 Transductive.png" style="max-width:95%; height:auto; border:1px solid #ddd; padding:5px;">
+            <p style="font-size:0.9rem; margin-top:8px;">Algorithm 2: Transductive TTA</p>
+          </div>
+        </div>
+
+        <div class="content has-text-justified" style="margin-top: 1.5rem;">
+          <p>
+            Notably, both procedures are fully <b>optimization-free</b>, relying on one-pass closed-form updates for efficient adaptation. ADAPT supports both <b>online</b> (streaming, one sample at a time) and <b>transductive</b> (full test set available) settings.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Experimental Results Section -->
+<section class="section py-3">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3"><img src="./static/images/bar-chart.gif" style="height:55px; vertical-align:middle; margin-right:8px;">Experimental Results</h2>
+        
+        <div class="content has-text-justified">
+          <p>
+            We evaluate ADAPT on three tasks: <b>natural distribution shift</b>, <b>corruption robustness</b>, and <b>fine-grained categorization</b>. ADAPT achieves state-of-the-art performance across all benchmarks in both online and transductive settings.
+          </p>
+        </div>
+
+        <!-- Carousel for Tables -->
+        <div class="carousel-container" style="position:relative; width:100%; margin-top:1.5rem;">
+          <!-- Slides -->
+          <div class="carousel-slides" style="position:relative; overflow:hidden; height:450px;">
+            <div class="carousel-slide" id="slide1" style="display:flex; justify-content:center; align-items:center; height:100%;">
+              <div style="text-align:center;">
+                <img src="./static/images/Table_Task 1 natural distribution shift.png" style="max-width:100%; max-height:400px; height:auto;">
+                <p style="font-size:0.9rem; margin-top:8px;"><i class="fas fa-globe" style="color:#3498db; margin-right:5px;"></i><b>Task 1:</b> Natural Distribution Shift</p>
+              </div>
+            </div>
+            <div class="carousel-slide" id="slide2" style="display:none; justify-content:center; align-items:center; height:100%;">
+              <div style="text-align:center;">
+                <img src="./static/images/Table_Task2 corruption robustness.png" style="max-width:100%; max-height:400px; height:auto;">
+                <p style="font-size:0.9rem; margin-top:8px;"><i class="fas fa-shield-alt" style="color:#e67e22; margin-right:5px;"></i><b>Task 2:</b> Corruption Robustness</p>
+              </div>
+            </div>
+            <div class="carousel-slide" id="slide3" style="display:none; justify-content:center; align-items:center; height:100%;">
+              <div style="text-align:center;">
+                <img src="./static/images/Table_Task3 fine-grained categorization.png" style="max-width:100%; max-height:400px; height:auto;">
+                <p style="font-size:0.9rem; margin-top:8px;"><i class="fas fa-search" style="color:#9b59b6; margin-right:5px;"></i><b>Task 3:</b> Fine-Grained Categorization</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Navigation Buttons -->
+          <div style="text-align:center; margin-top:15px;">
+            <button onclick="showSlide(1)" class="button is-small is-rounded" id="btn1" style="margin:0 5px; background-color:#3273dc; color:white;">1</button>
+            <button onclick="showSlide(2)" class="button is-small is-rounded" id="btn2" style="margin:0 5px;">2</button>
+            <button onclick="showSlide(3)" class="button is-small is-rounded" id="btn3" style="margin:0 5px;">3</button>
+          </div>
+          
+          <!-- Auto-play Script -->
+          <script>
+            let currentSlide = 1;
+            const totalSlides = 3;
+            
+            function showSlide(n) {
+              currentSlide = n;
+              for (let i = 1; i <= totalSlides; i++) {
+                document.getElementById('slide' + i).style.display = 'none';
+                document.getElementById('btn' + i).style.backgroundColor = '';
+                document.getElementById('btn' + i).style.color = '';
+              }
+              document.getElementById('slide' + n).style.display = 'flex';
+              document.getElementById('btn' + n).style.backgroundColor = '#3273dc';
+              document.getElementById('btn' + n).style.color = 'white';
+            }
+            
+            function nextSlide() {
+              currentSlide = currentSlide % totalSlides + 1;
+              showSlide(currentSlide);
+            }
+            
+            // Auto-play every 6 seconds
+            setInterval(nextSlide, 6000);
+          </script>
+        </div>
+
+        <!-- Visualization -->
+        <div class="content has-text-justified" style="margin-top:2.5rem;">
+          <p>
+            <b>Visualization of Decision Boundaries:</b> We visualize the decision boundaries of different TTA methods on ImageNet-A. CLIP, TPT, and TDA rely on feature similarity without explicit class distribution modeling, leading to irregular and unstable boundaries. In contrast, <b>ADAPT</b> builds a Gaussian-based model that explicitly estimates class distributions, yielding more compact clusters and smoother boundaries.
+          </p>
+        </div>
+        <div class="has-text-centered" style="margin-top:1rem;">
+          <img src="./static/images/decision_boundary_v4.png" style="max-width:95%; height:auto;">
+          <p style="font-size:0.9rem; margin-top:8px;">Visualization of decision boundaries on ImageNet-A. Colors indicate different classes.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
+    <h2 class="title"><img src="./static/images/telescope.png" style="height:45px; vertical-align:middle; margin-right:8px;">BibTeX</h2>
     If you find our work useful, please consider citing:
     <pre><code>@article{zhang2025backpropagation,
   title={Backpropagation-Free Test-Time Adaptation via Probabilistic Gaussian Alignment},
