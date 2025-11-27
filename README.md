@@ -16,9 +16,9 @@
 
 <div align="center">
   <h4>NeurIPS 2025</h4>
-  <a href=" "><strong>[Paper](https://arxiv.org/pdf/2508.15568)</strong></a>
- &nbsp;&nbsp;
-  <a href=" "><strong>[Project Page](https://aim-skku.github.io/ADAPT/)</strong></a>
+  <a href="https://arxiv.org/pdf/2508.15568"><strong>[Paper]</strong></a>
+  &nbsp;&nbsp;
+  <a href="https://aim-skku.github.io/ADAPT/"><strong>[Project Page]</strong></a>
 </div>
 </div>
 
